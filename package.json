@@ -37,7 +37,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "unbuild --minify",
+    "build": "unbuild",
     "dev": "vitest dev --coverage",
     "lint": "eslint . && prettier -c .",
     "lint:fix": "automd && eslint . --fix && prettier -w .",
