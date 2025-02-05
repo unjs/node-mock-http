@@ -84,7 +84,7 @@ export class EventEmitter implements NodeEventEmitter {
   static kMaxEventTargetListenersWarned = kMaxEventTargetListenersWarned;
 
   // Static utils
-  static usingDomains = false; // backwards compatibilit
+  static usingDomains = false; // backwards compatibility
   static get on() {
     return on;
   }
