@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.1.3
+
+[compare changes](https://github.com/unjs/node-mock-http/compare/v0.1.2...v0.1.3)
+
+### 💅 Refactors
+
+- Use much smaller events polyfill from unenv v1" ([17c75e2](https://github.com/unjs/node-mock-http/commit/17c75e2))
+
+### 📦 Build
+
+- Avoid minification to allow end-user tree-shaking" ([542849e](https://github.com/unjs/node-mock-http/commit/542849e))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.1.2
 
 [compare changes](https://github.com/unjs/node-mock-http/compare/v0.1.1...v0.1.2)
