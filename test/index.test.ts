@@ -31,41 +31,43 @@ describe("fetchNodeRequestHandler", () => {
     });
   });
 
-  it("headers (object)", async () => {
-    const res = await fetchNodeRequestHandler(echoHandler, "/test", {
-      headers: { foo: "bar", empty: "" },
-    });
-    expect(await res.json()).toEqual({
-      url: "/test",
-      headers: { foo: "bar", host: "localhost" },
-    });
-  });
-
-  it("headers (Headers)", async () => {
-    const res = await fetchNodeRequestHandler(echoHandler, "/test", {
-      headers: new Headers({ foo: "bar", empty: "" }),
-    });
-    expect(await res.json()).toEqual({
-      url: "/test",
-      headers: { foo: "bar", host: "localhost" },
-    });
-  });
-
-  it("headers (array)", async () => {
-    const res = await fetchNodeRequestHandler(echoHandler, "/test", {
-      headers: [
+  const requestHeaderTestCases: {
+    description: string;
+    input: Record<string, string> | Headers | [string, string][];
+    expected: Record<string, string | string[]>;
+  }[] = [
+    {
+      description: "Headers",
+      input: new Headers({ foo: "bar", empty: "" }),
+      expected: { foo: "bar", host: "localhost" },
+    },
+    {
+      description: "object",
+      input: { foo: "bar", empty: "" },
+      expected: { foo: "bar", host: "localhost" },
+    },
+    {
+      description: "array",
+      input: [
         ["foo", "bar"],
         ["empty", ""],
         ["array", "a"],
         ["array", "b"],
         ["array", "c"],
       ],
-    });
-    expect(await res.json()).toEqual({
-      url: "/test",
-      headers: { foo: "bar", host: "localhost", array: ["a", "b", "c"] },
-    });
-  });
+      expected: { foo: "bar", host: "localhost", array: ["a", "b", "c"] },
+    },
+  ];
+
+  it.each(requestHeaderTestCases)(
+    "with request headers formatted as ($description)",
+    async ({ input, expected }) => {
+      const res = await fetchNodeRequestHandler(echoHandler, "/test", {
+        headers: input,
+      });
+      expect(await res.json()).toEqual({ url: "/test", headers: expected });
+    },
+  );
 
   it("error response", async () => {
     const res = await fetchNodeRequestHandler(() => {
