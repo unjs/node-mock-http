@@ -54,7 +54,7 @@ const kShapeMode = Symbol.for("shapeMode");
 const kMaxEventTargetListeners = Symbol.for("events.maxEventTargetListeners");
 const kEnhanceStackBeforeInspector = Symbol.for("kEnhanceStackBeforeInspector");
 const kWatermarkData = Symbol.for("nodejs.watermarkData");
-const kEventEmitter = Symbol.for("kEventEmitter");
+// const kEventEmitter = Symbol.for("kEventEmitter");
 const kAsyncResource = Symbol.for("kAsyncResource");
 const kFirstEventParam = Symbol.for("kFirstEventParam");
 const kResistStopPropagation = Symbol.for("kResistStopPropagation");
@@ -1053,7 +1053,7 @@ function isEventTarget(
   return typeof (emitter as EventTarget)?.addEventListener === "function";
 }
 
-function checkListener(listener: Listener) {
+function checkListener(_listener: Listener) {
   // validateFunction(listener, "listener");
 }
 

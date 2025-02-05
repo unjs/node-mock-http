@@ -37,6 +37,7 @@ const res = await fetchNodeRequestHandler(
 - Install latest LTS version of [Node.js](https://nodejs.org/en/)
 - Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`
 - Install dependencies using `pnpm install`
+- Build project in stub mode using `pnpm build --stub`
 - Run interactive tests using `pnpm dev`
 
 </details>
