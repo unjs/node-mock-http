@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## v0.1.1
 
 [compare changes](https://github.com/unjs/node-mock-http/compare/v0.1.0...v0.1.1)
@@ -20,4 +19,3 @@
 ### ❤️ Contributors
 
 - Pooya Parsa ([@pi0](http://github.com/pi0))
-
