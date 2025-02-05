@@ -1,11 +1,11 @@
-import type { NodeRequestHandler } from "./types";
+import type { NodeRequestHandler, AbstractRequest } from "./types";
 import { callNodeRequestHandler } from "./call";
 import { toWebResponseHeaders } from "./utils";
 
 export async function fetchNodeRequestHandler(
   handler: NodeRequestHandler,
   url: string | URL,
-  init: RequestInit = {},
+  init: RequestInit & AbstractRequest = {},
 ): Promise<Response> {
   try {
     const response = await callNodeRequestHandler(handler, { url, ...init });
