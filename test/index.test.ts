@@ -60,7 +60,7 @@ describe("fetchNodeRequestHandler", () => {
   ];
 
   it.each(requestHeaderTestCases)(
-    "with request headers formatted as ($description)",
+    "with request headers formatted as $description",
     async ({ input, expected }) => {
       const res = await fetchNodeRequestHandler(echoHandler, "/test", {
         headers: input,
