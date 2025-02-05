@@ -53,6 +53,7 @@ describe("fetchNodeRequestHandler", () => {
         ["empty", ""],
         ["array", "a"],
         ["array", "b"],
+        ["array", ""],
         ["array", "c"],
       ],
       expected: { foo: "bar", host: "localhost", array: ["a", "b", "c"] },
