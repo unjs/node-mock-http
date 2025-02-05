@@ -4,7 +4,7 @@ import { Buffer } from "node-mock-http/_polyfill/buffer";
 import type { BufferEncoding, Callback } from "../_internal/types";
 
 export class Writable extends EventEmitter implements NodeStream.Writable {
-  __unenv__ = {};
+  override __unenv__ = {};
 
   readonly writable: boolean = true;
   writableEnded: boolean = false;
