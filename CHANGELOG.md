@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.1.2
+
+[compare changes](https://github.com/unjs/node-mock-http/compare/v0.1.1...v0.1.2)
+
+### 📦 Build
+
+- Avoid minification to allow end-user tree-shaking ([df6a444](https://github.com/unjs/node-mock-http/commit/df6a444))
+
+### 🏡 Chore
+
+- Apply automated updates ([6ac2f89](https://github.com/unjs/node-mock-http/commit/6ac2f89))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v0.1.1
 
 [compare changes](https://github.com/unjs/node-mock-http/compare/v0.1.0...v0.1.1)
