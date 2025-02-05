@@ -31,7 +31,7 @@ describe("fetchNodeRequestHandler", () => {
     });
   });
 
-  it("heaaders (object)", async () => {
+  it("headers (object)", async () => {
     const res = await fetchNodeRequestHandler(echoHandler, "/test", {
       headers: { foo: "bar", empty: "" },
     });
@@ -41,7 +41,7 @@ describe("fetchNodeRequestHandler", () => {
     });
   });
 
-  it("heaaders (Headers)", async () => {
+  it("headers (Headers)", async () => {
     const res = await fetchNodeRequestHandler(echoHandler, "/test", {
       headers: new Headers({ foo: "bar", empty: "" }),
     });
@@ -51,7 +51,7 @@ describe("fetchNodeRequestHandler", () => {
     });
   });
 
-  it("heaaders (array)", async () => {
+  it("headers (array)", async () => {
     const res = await fetchNodeRequestHandler(echoHandler, "/test", {
       headers: [
         ["foo", "bar"],

@@ -75,7 +75,7 @@ export class Readable extends EventEmitter implements NodeStream.Readable {
     return this;
   }
 
-  pipe<T>(_destenition: T, _options?: { end?: boolean }): T {
+  pipe<T>(_destination: T, _options?: { end?: boolean }): T {
     return {} as T;
   }
 
