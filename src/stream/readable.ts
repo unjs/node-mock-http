@@ -4,7 +4,7 @@ import type { BufferEncoding, Callback } from "../_internal/types";
 import { createNotImplementedError } from "../_internal/utils";
 
 export class Readable extends EventEmitter implements NodeStream.Readable {
-  __unenv__ = {};
+  override __unenv__ = {};
 
   readonly readableEncoding: BufferEncoding | null = null;
   readonly readableEnded: boolean = true;
