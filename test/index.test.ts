@@ -34,7 +34,7 @@ describe("fetchNodeRequestHandler", () => {
 
   const requestHeaderTestCases: {
     description: string;
-    input: (HeadersInit & (HeadersInit | NodeRequestHeaders));
+    input: HeadersInit & (HeadersInit | NodeRequestHeaders);
     expected: Record<string, string | string[]>;
   }[] = [
     {
