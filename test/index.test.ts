@@ -3,6 +3,7 @@ import {
   fetchNodeRequestHandler,
   callNodeRequestHandler,
   type NodeRequestHandler,
+  type NodeRequestHeaders,
 } from "../src";
 
 const echoHandler: NodeRequestHandler = (req, res) => {
@@ -33,7 +34,7 @@ describe("fetchNodeRequestHandler", () => {
 
   const requestHeaderTestCases: {
     description: string;
-    input: Record<string, string> | Headers | [string, string][];
+    input: (HeadersInit & (HeadersInit | NodeRequestHeaders));
     expected: Record<string, string | string[]>;
   }[] = [
     {
