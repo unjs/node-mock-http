@@ -3,6 +3,7 @@ import {
   fetchNodeRequestHandler,
   callNodeRequestHandler,
   type NodeRequestHandler,
+  type NodeRequestHeaders,
 } from "../src";
 
 const echoHandler: NodeRequestHandler = (req, res) => {
@@ -31,41 +32,45 @@ describe("fetchNodeRequestHandler", () => {
     });
   });
 
-  it("headers (object)", async () => {
-    const res = await fetchNodeRequestHandler(echoHandler, "/test", {
-      headers: { foo: "bar", empty: "" },
-    });
-    expect(await res.json()).toEqual({
-      url: "/test",
-      headers: { foo: "bar", host: "localhost" },
-    });
-  });
-
-  it("headers (Headers)", async () => {
-    const res = await fetchNodeRequestHandler(echoHandler, "/test", {
-      headers: new Headers({ foo: "bar", empty: "" }),
-    });
-    expect(await res.json()).toEqual({
-      url: "/test",
-      headers: { foo: "bar", host: "localhost" },
-    });
-  });
-
-  it("headers (array)", async () => {
-    const res = await fetchNodeRequestHandler(echoHandler, "/test", {
-      headers: [
+  const requestHeaderTestCases: {
+    description: string;
+    input: HeadersInit & (HeadersInit | NodeRequestHeaders);
+    expected: Record<string, string | string[]>;
+  }[] = [
+    {
+      description: "Headers",
+      input: new Headers({ foo: "bar", empty: "" }),
+      expected: { foo: "bar", host: "localhost" },
+    },
+    {
+      description: "object",
+      input: { foo: "bar", empty: "" },
+      expected: { foo: "bar", host: "localhost" },
+    },
+    {
+      description: "array",
+      input: [
         ["foo", "bar"],
         ["empty", ""],
         ["array", "a"],
         ["array", "b"],
+        ["array", ""],
         ["array", "c"],
       ],
+      expected: { foo: "bar", host: "localhost", array: ["a", "b", "c"] },
+    },
+  ];
+
+  for (const testCase of requestHeaderTestCases) {
+    const { description, input, expected } = testCase;
+
+    it(`with request headers formatted as ${description}`, async () => {
+      const res = await fetchNodeRequestHandler(echoHandler, "/test", {
+        headers: input,
+      });
+      expect(await res.json()).toEqual({ url: "/test", headers: expected });
     });
-    expect(await res.json()).toEqual({
-      url: "/test",
-      headers: { foo: "bar", host: "localhost", array: ["a", "b", "c"] },
-    });
-  });
+  }
 
   it("error response", async () => {
     const res = await fetchNodeRequestHandler(() => {
