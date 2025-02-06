@@ -61,15 +61,16 @@ describe("fetchNodeRequestHandler", () => {
     },
   ];
 
-  it.each(requestHeaderTestCases)(
-    "with request headers formatted as $description",
-    async ({ input, expected }) => {
+  for (const testCase of requestHeaderTestCases) {
+    const { description, input, expected } = testCase;
+
+    it(`with request headers formatted as ${description}`, async () => {
       const res = await fetchNodeRequestHandler(echoHandler, "/test", {
         headers: input,
       });
       expect(await res.json()).toEqual({ url: "/test", headers: expected });
-    },
-  );
+    });
+  }
 
   it("error response", async () => {
     const res = await fetchNodeRequestHandler(() => {
