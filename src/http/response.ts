@@ -2,10 +2,11 @@ import type NodeHTTP from "node:http";
 import type { Socket } from "node:net";
 import type { Callback } from "../_internal/types";
 import { Writable } from "../stream/writable";
+import type { IncomingMessage } from "node:http";
 
 export class ServerResponse
   extends Writable
-  implements NodeHTTP.ServerResponse
+  implements NodeHTTP.ServerResponse<IncomingMessage>
 {
   statusCode: number = 200;
   statusMessage: string = "";
@@ -17,6 +18,7 @@ export class ServerResponse
   finished: boolean = false;
   headersSent: boolean = false;
   strictContentLength = false;
+  writableAborted = false;
   connection: Socket | null = null;
   socket: Socket | null = null;
 
