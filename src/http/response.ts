@@ -18,7 +18,6 @@ export class ServerResponse
   finished: boolean = false;
   headersSent: boolean = false;
   strictContentLength = false;
-  writableAborted = false;
   connection: Socket | null = null;
   socket: Socket | null = null;
 

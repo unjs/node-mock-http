@@ -16,6 +16,7 @@ export class Writable extends EventEmitter implements NodeStream.Writable {
   readonly closed: boolean = false;
   readonly errored: Error | null = null;
   readonly writableNeedDrain: boolean = false;
+  readonly writableAborted: boolean = false;
 
   destroyed: boolean = false;
 
