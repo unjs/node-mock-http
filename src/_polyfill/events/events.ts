@@ -33,7 +33,7 @@ import { EventEmitter as NodeEventEmitter } from "node:events";
 let defaultMaxListeners = 10;
 
 const AsyncIteratorPrototype = Object.getPrototypeOf(
-  Object.getPrototypeOf(async function* () {}).prototype,
+  Object.getPrototypeOf(Object.getPrototypeOf((async function* () {})())),
 );
 
 // Inspect (mocked)
