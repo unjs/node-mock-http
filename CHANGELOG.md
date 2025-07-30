@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.0.2
+
+[compare changes](https://github.com/unjs/node-mock-http/compare/v1.0.1...v1.0.2)
+
+### 🩹 Fixes
+
+- Correct `AsyncIteratorPrototype` retrieval in events polyfill ([#11](https://github.com/unjs/node-mock-http/pull/11))
+
+### 🏡 Chore
+
+- Update deps ([438ba50](https://github.com/unjs/node-mock-http/commit/438ba50))
+
+### ❤️ Contributors
+
+- Ryota Watanabe ([@wattanx](https://github.com/wattanx))
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+
 ## v1.0.1
 
 [compare changes](https://github.com/unjs/node-mock-http/compare/v1.0.0...v1.0.1)
