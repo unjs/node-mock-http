@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.0.3
+
+[compare changes](https://github.com/unjs/node-mock-http/compare/v1.0.2...v1.0.3)
+
+### 🩹 Fixes
+
+- **node:events:** Call to `Array.prototype.slice` with context ([e0a9e6d](https://github.com/unjs/node-mock-http/commit/e0a9e6d))
+- Add `Symbol.asyncDispose` for `Wrtitable` ([38efa02](https://github.com/unjs/node-mock-http/commit/38efa02))
+
+### 🏡 Chore
+
+- Update deps ([b888dc4](https://github.com/unjs/node-mock-http/commit/b888dc4))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+
 ## v1.0.2
 
 [compare changes](https://github.com/unjs/node-mock-http/compare/v1.0.1...v1.0.2)
