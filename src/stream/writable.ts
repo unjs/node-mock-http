@@ -122,4 +122,8 @@ export class Writable extends EventEmitter implements NodeStream.Writable {
   ): T {
     throw new Error("Method not implemented.");
   }
+
+  [Symbol.asyncDispose]() {
+    return Promise.resolve();
+  }
 }
