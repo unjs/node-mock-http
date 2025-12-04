@@ -13,9 +13,9 @@ export class Socket extends Duplex implements NodeNet.Socket {
   readonly pending: boolean = false;
   readonly localAddress: string = "";
   readonly localPort: number = 0;
-  readonly remoteAddress?: string = "";
-  readonly remoteFamily?: string = "";
-  readonly remotePort?: number = 0;
+  readonly remoteAddress: string | undefined = "";
+  readonly remoteFamily: string | undefined = "";
+  readonly remotePort: number | undefined = 0;
   readonly autoSelectFamilyAttemptedAddresses = [];
   readonly readyState: NodeNet.SocketReadyState = "readOnly";
 
