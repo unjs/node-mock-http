@@ -55,7 +55,7 @@
     "eslint-config-unjs": "^0.5.0",
     "jiti": "^2.6.1",
     "prettier": "^3.7.4",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "unbuild": "^3.6.1",
     "vitest": "^4.0.15"
   },
