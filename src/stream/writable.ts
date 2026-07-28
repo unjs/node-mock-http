@@ -96,12 +96,15 @@ export class Writable extends EventEmitter implements NodeStream.Writable {
     const data = arg1 === callback ? undefined : arg1;
     if (data) {
       const encoding = arg2 === callback ? undefined : arg2;
-      this.write(data, encoding, callback);
+      this.write(data, encoding);
     }
     this.writableEnded = true;
     this.writableFinished = true;
     this.emit("close");
     this.emit("finish");
+    if (callback) {
+      callback();
+    }
     return this;
   }
 

@@ -112,3 +112,44 @@ describe("fetchNodeRequestHandler", () => {
     });
   });
 });
+
+describe("ServerResponse#end callback", () => {
+  it("invokes callback with no chunk", async () => {
+    const calls: string[] = [];
+    const res = await fetchNodeRequestHandler((_req, res) => {
+      res.on("finish", () => calls.push("finish"));
+      res.end(() => calls.push("callback"));
+    }, "/test");
+    expect(await res.text()).toBe("");
+    expect(calls).toEqual(["finish", "callback"]);
+  });
+
+  it("invokes callback once with chunk", async () => {
+    const calls: string[] = [];
+    const res = await fetchNodeRequestHandler((_req, res) => {
+      res.on("finish", () => calls.push("finish"));
+      res.end("hello", () => calls.push("callback"));
+    }, "/test");
+    expect(await res.text()).toBe("hello");
+    expect(calls).toEqual(["finish", "callback"]);
+  });
+
+  it("invokes callback once with chunk and encoding", async () => {
+    let calls = 0;
+    const res = await fetchNodeRequestHandler((_req, res) => {
+      res.end("hello", "utf8", () => calls++);
+    }, "/test");
+    expect(await res.text()).toBe("hello");
+    expect(calls).toBe(1);
+  });
+
+  it("invokes callback on an already ended response", async () => {
+    let calls = 0;
+    const res = await fetchNodeRequestHandler((_req, res) => {
+      res.end("hello");
+      res.end(() => calls++);
+    }, "/test");
+    expect(await res.text()).toBe("hello");
+    expect(calls).toBe(1);
+  });
+});
