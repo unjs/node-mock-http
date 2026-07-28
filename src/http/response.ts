@@ -51,9 +51,7 @@ export class ServerResponse
   writeHead(
     statusCode: number,
     arg1?:
-      | string
-      | NodeHTTP.OutgoingHttpHeaders
-      | NodeHTTP.OutgoingHttpHeader[],
+      string | NodeHTTP.OutgoingHttpHeaders | NodeHTTP.OutgoingHttpHeader[],
     arg2?: NodeHTTP.OutgoingHttpHeaders | NodeHTTP.OutgoingHttpHeader[],
   ) {
     if (statusCode) {

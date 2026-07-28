@@ -179,7 +179,6 @@ export class EventEmitter implements NodeEventEmitter {
 
     this._maxListeners = this._maxListeners || undefined;
 
-    // eslint-disable-next-line unicorn/prefer-ternary
     if (opts?.captureRejections) {
       // validateBoolean(opts.captureRejections, "options.captureRejections");
       this[kCapture] = Boolean(opts.captureRejections);
@@ -976,14 +975,12 @@ const kSize = 2048;
 const kMask = kSize - 1;
 
 class FixedCircularBuffer {
-  bottom: number;
-  top: number;
+  bottom: number = 0;
+  top: number = 0;
   list: any[];
   next: FixedCircularBuffer | null;
 
   constructor() {
-    this.bottom = 0;
-    this.top = 0;
     this.list = new Array(kSize); // eslint-disable-line unicorn/no-new-array
     this.next = null;
   }
