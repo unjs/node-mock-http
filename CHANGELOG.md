@@ -1,5 +1,23 @@
 # Changelog
 
+## v1.0.5
+
+[compare changes](https://github.com/unjs/node-mock-http/compare/v1.0.4...v1.0.5)
+
+### 🩹 Fixes
+
+- Invoke `end` callback when no chunk is passed ([#32](https://github.com/unjs/node-mock-http/pull/32))
+
+### 🏡 Chore
+
+- Update deps ([db4557b](https://github.com/unjs/node-mock-http/commit/db4557b))
+- Update release script ([5978445](https://github.com/unjs/node-mock-http/commit/5978445))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+- Daniel Roe ([@danielroe](https://github.com/danielroe))
+
 ## v1.0.4
 
 [compare changes](https://github.com/unjs/node-mock-http/compare/v1.0.2...v1.0.4)
