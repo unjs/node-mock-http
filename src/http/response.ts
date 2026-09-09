@@ -62,14 +62,27 @@ export class ServerResponse
       arg1 = undefined;
     }
     const headers = arg2 || arg1;
-    if (headers) {
-      if (Array.isArray(headers)) {
-        // TODO: OutgoingHttpHeader[]
-      } else {
-        for (const key in headers) {
-          // @ts-ignore
-          this.setHeader(key, headers[key]);
+    if (Array.isArray(headers)) {
+      const paired = Array.isArray(headers[0]);
+      const step = paired ? 1 : 2;
+      const seen = new Set<string>();
+      for (let i = 0; i + step <= headers.length; i += step) {
+        const entry = headers[i]!;
+        const pair = paired ? (entry as NodeHTTP.OutgoingHttpHeader[]) : undefined;
+        if (pair && pair.length < 2) continue;
+        const key = String(pair ? pair[0] : entry).toLowerCase();
+        const value = (pair ? pair[1] : headers[i + 1])!;
+        if (seen.has(key)) {
+          this.appendHeader(key, value as string | string[]);
+        } else {
+          seen.add(key);
+          this.setHeader(key, value);
         }
+      }
+    } else if (headers) {
+      for (const key in headers) {
+        // @ts-ignore
+        this.setHeader(key, headers[key]);
       }
     }
     this.headersSent = true;
@@ -88,7 +101,7 @@ export class ServerResponse
     const all = [
       ...(Array.isArray(current) ? current : [current]),
       ...(Array.isArray(value) ? value : [value]),
-    ].filter(Boolean) as string[];
+    ].filter((v) => v != null) as string[];
     this._headers[name] = all.length > 1 ? all : all[0];
     return this;
   }

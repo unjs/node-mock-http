@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   fetchNodeRequestHandler,
   callNodeRequestHandler,
+  IncomingMessage,
+  ServerResponse,
   type NodeRequestHandler,
   type NodeRequestHeaders,
 } from "../src";
@@ -151,5 +153,79 @@ describe("ServerResponse#end callback", () => {
     }, "/test");
     expect(await res.text()).toBe("hello");
     expect(calls).toBe(1);
+  });
+});
+
+describe("ServerResponse.writeHead header arrays", () => {
+  it("accepts Node's flat [k, v, k, v] array", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, ["content-type", "image/jpeg", "x-a", "1"]);
+    expect(res.getHeader("content-type")).toBe("image/jpeg");
+    expect(res.getHeader("x-a")).toBe("1");
+  });
+
+  it("accepts an array of [k, v] pairs", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, [
+      ["content-type", "image/png"],
+      ["x-b", "2"],
+    ]);
+    expect(res.getHeader("content-type")).toBe("image/png");
+    expect(res.getHeader("x-b")).toBe("2");
+  });
+
+  it("replaces an earlier setHeader, then appends duplicates", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.setHeader("x-nosniff", "old");
+    res.writeHead(200, [
+      "x-nosniff",
+      "new",
+      "set-cookie",
+      "a=1",
+      "set-cookie",
+      "b=2",
+    ]);
+    expect(res.getHeader("x-nosniff")).toBe("new");
+    expect(res.getHeader("set-cookie")).toEqual(["a=1", "b=2"]);
+  });
+
+  it("keeps an array value in a pair intact", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, [
+      ["set-cookie", ["a=1", "b=2"]],
+      ["x-e", "5"],
+    ]);
+    expect(res.getHeader("set-cookie")).toEqual(["a=1", "b=2"]);
+    expect(res.getHeader("x-e")).toBe("5");
+  });
+
+  it("ignores a trailing key with no value in a flat list", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, ["x-d", "4", "dangling"]);
+    expect(res.getHeader("x-d")).toBe("4");
+    expect(res.getHeader("dangling")).toBeUndefined();
+  });
+
+  it("ignores a pair with no value", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, [["x-a", "1"], ["dangling"]] as never);
+    expect(res.hasHeader("dangling")).toBe(false);
+    expect(res.getHeaderNames()).toEqual(["x-a"]);
+  });
+
+  it("keeps falsy duplicate values", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, ["x-id", 1, "x-id", 0] as never);
+    expect(res.getHeader("x-id")).toEqual([1, 0]);
+
+    const res2 = new ServerResponse(new IncomingMessage());
+    res2.writeHead(200, ["x-s", "a", "x-s", ""]);
+    expect(res2.getHeader("x-s")).toEqual(["a", ""]);
+  });
+
+  it("still accepts a plain headers object", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, { "content-type": "text/html" });
+    expect(res.getHeader("content-type")).toBe("text/html");
   });
 });
