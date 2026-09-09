@@ -69,6 +69,7 @@ export class ServerResponse
       for (let i = 0; i + step <= headers.length; i += step) {
         const entry = headers[i]!;
         const pair = paired ? (entry as NodeHTTP.OutgoingHttpHeader[]) : undefined;
+        if (pair && pair.length < 2) continue;
         const key = String(pair ? pair[0] : entry).toLowerCase();
         const value = (pair ? pair[1] : headers[i + 1])!;
         if (seen.has(key)) {
@@ -100,7 +101,7 @@ export class ServerResponse
     const all = [
       ...(Array.isArray(current) ? current : [current]),
       ...(Array.isArray(value) ? value : [value]),
-    ].filter(Boolean) as string[];
+    ].filter((v) => v != null) as string[];
     this._headers[name] = all.length > 1 ? all : all[0];
     return this;
   }

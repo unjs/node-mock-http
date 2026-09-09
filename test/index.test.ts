@@ -206,6 +206,23 @@ describe("ServerResponse.writeHead header arrays", () => {
     expect(res.getHeader("dangling")).toBeUndefined();
   });
 
+  it("ignores a pair with no value", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, [["x-a", "1"], ["dangling"]] as never);
+    expect(res.hasHeader("dangling")).toBe(false);
+    expect(res.getHeaderNames()).toEqual(["x-a"]);
+  });
+
+  it("keeps falsy duplicate values", () => {
+    const res = new ServerResponse(new IncomingMessage());
+    res.writeHead(200, ["x-id", 1, "x-id", 0] as never);
+    expect(res.getHeader("x-id")).toEqual([1, 0]);
+
+    const res2 = new ServerResponse(new IncomingMessage());
+    res2.writeHead(200, ["x-s", "a", "x-s", ""]);
+    expect(res2.getHeader("x-s")).toEqual(["a", ""]);
+  });
+
   it("still accepts a plain headers object", () => {
     const res = new ServerResponse(new IncomingMessage());
     res.writeHead(200, { "content-type": "text/html" });
