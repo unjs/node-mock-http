@@ -47,7 +47,7 @@
     "test:types": "tsc --noEmit --skipLibCheck"
   },
   "devDependencies": {
-    "@types/node": "^24",
+    "@types/node": "^26.6.5",
     "@vitest/coverage-v8": "^4.1.10",
     "automd": "^0.4.3",
     "changelogen": "^0.6.2",
